@@ -1,0 +1,7 @@
+# dsh-quote-panel bundle patch: one row — the host face of the package.
+# The same package declares dsh.client, so the modules node half also scans it
+# into the browser roster and serves /plugins/dsh-quote-panel/client.js.
+
+- insert:
+    - id: quote-host
+      name: 'dsh-quote-panel'
