@@ -4,7 +4,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-![截图](docs/screenshot.svg)
+![截图](docs/screenshot.png)
 
 ## ✨ 功能特性
 

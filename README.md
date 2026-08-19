@@ -4,7 +4,7 @@ A real-time stock watch panel for [DeepSeek Harness](https://github.com/deepseek
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-![Screenshot](docs/screenshot.svg)
+![Screenshot](docs/screenshot.png)
 
 ## ✨ Features
 
