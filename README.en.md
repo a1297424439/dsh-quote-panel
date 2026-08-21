@@ -19,9 +19,7 @@ A real-time stock watch panel for [DeepSeek Harness](https://github.com/deepseek
 - **Watchlist**: add / remove symbols per market, persisted in `localStorage`
 - **Auto refresh**: quotes refresh every 5 s (CN) / 10 s (US), server-side
 - **Always-on-top & draggable**: z-index pinned above any skin/theme overlay; drag the title bar anywhere; position is remembered
-- **🐂 Cow Pet / 牛来 (added in v1.1)**: click the **🐂 牛来** button in the panel header to summon a cow that roams the page. Whenever **any symbol in your watchlist has `changePct > 0`**, the cow immediately does a two-step run + shouts `\\牛来/` in a yellow speech bubble (twice, 320 ms apart). Two flavors:
-  - **Web mode** (default): floats inside your DSH session page; auto-syncs with your watchlist.
-  - **Desktop mode**: opens a chrome-less popup window via `window.open` (≈480×360); same-origin so it still hits `/dshq/quotes` in real time. Pin it on top of your screen as a true desktop pet.
+- **🐂 Cow Pet / 牛来 (added in v1.1)**: click the **🐂 牛来** button in the panel header to summon a cow that roams your DSH session page. Whenever **any symbol in your watchlist has `changePct > 0`**, the cow immediately does a two-step run + shouts `\牛来/` in a yellow speech bubble (twice, 320 ms apart). It floats inside the session page, scrolls with it, and auto-syncs your watchlist.
 - **Zero config**: all data comes from free public endpoints (Tencent Finance, no key)
 
 ## 🚀 Installation
@@ -57,50 +55,19 @@ npm i -g dsh-quote-panel
 
 ## 🐂 Cow Pet / 牛来
 
-Click **🐂 牛来** in the panel header to summon a small cow that roams the bottom of the page. Whenever **any symbol in your watchlist is currently up (changePct > 0)**, the cow will:
+Click **🐂 牛来** in the panel header to summon a small cow that roams the bottom of your session page. Whenever **any symbol in your watchlist is currently up (changePct > 0)**, the cow will:
 
 1. Run two quick steps (≈1.6 s, ~78 px horizontal hop, two jumps)
 2. Pause
-3. Pop a yellow speech bubble with bold `\\牛来/` plus a sub-line listing the up symbols (e.g. `Kweichow Moutai +1.32% · SSE Composite +0.21%`)
+3. Pop a yellow speech bubble with bold `\牛来/` plus a sub-line listing the up symbols (e.g. `Kweichow Moutai +1.32% · SSE Composite +0.21%`)
 4. Throttle the same wave to ≈1.8 s so it doesn't spam
 5. When nothing is up anymore, return to idle wandering and the bubble fades
 
 Data source is shared with the main panel — `/dshq/quotes` — so **no extra endpoints** and **no extra cost**.
 
-### Two modes
-
-| Mode | Entry point | Use case |
-|---|---|---|
-| Web (default) | Click **🐂 牛来** in the panel header | Always-on while you use DSH; lightest |
-| Desktop (popup) | Click **🪟 弹出独立窗口** in the pet overlay | Long-lived desktop pet; pin the popup on top of your screen |
-
-The desktop popup uses `window.open` with no chrome; same origin so it still hits `/dshq/quotes` in real time. If you double-click `lib/desk-pet/standalone.html` directly (off DSH origin), the popup falls back to **Demo mode**: the cow still wanders and pops bubbles, but the data is fake and the status bar reminds you to launch from the DSH session for live quotes.
-
 ### Turning the pet off
 
 Click the highlighted **🐂 关掉牛** button in the panel header, or the **✕** button on the overlay.
-
-## 🐮 Electron desktop pet (v1.2 → v1.4)
-
-The repo also ships a standalone **Electron app** (`desktop-pet/`) — a real transparent, frameless, always-on-top window with the cow standing directly on your desktop:
-
-- **Full-screen flying (v1.4)**: the window is now a transparent layer covering your whole workspace; the cow teleports around the full screen (up to 82% height) instead of pacing in a small box
-- **Mouse pass-through**: the transparent layer forwards clicks to the apps below (`setIgnoreMouseEvents` + forward); only hovering over the cow takes over interaction — zero interference with normal use, and it stays off the taskbar (`skipTaskbar`)
-- **Teleport with afterimages (v1.3)**: idle movement is now a "cultivator-style" teleport — 4 fading afterimages along the path + spirit particles + a shockwave ring on landing
-- **Transparent frameless always-on-top window**; the character sheet is auto-matted (white background removed, all 5 views: `desktop-pet/assets/cow-view-*.png`)
-- **Left-drag** the cow to move it anywhere on screen
-- **NiuLai on green ticks**: watches your watchlist via the free Tencent Finance public API; when any symbol has `changePct > 0` it golden-flashes and teleports to mid-screen, then jumps and shouts `\牛来/` (8 s throttle + 70% probability, no spam)
-- **Click interactions**: tap the cow to cycle jump → squash-rebound → shake, each with a random funny Chinese speech bubble (opaque, above the character; bubble moves below the cow when it flies high)
-- **Right-click menu**: choose watchlist (presets + custom codes), resize (S/M/L, controls cow body size), always-on-top toggle, quit
-
-```bash
-cd desktop-pet
-npm install
-npm start
-npm run dist   # build executables with electron-builder
-```
-
-Settings (watchlist, size, on-top) persist across restarts in the OS userData directory.
 
 ## 🗂 Data sources & disclaimer
 
