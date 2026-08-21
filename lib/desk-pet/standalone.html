@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<title>🐂 牛来桌宠 · 桌面版</title>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><text y='52' font-size='52'>🐂</text></svg>" />
+<style>
+  html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; background: transparent; font-family: system-ui,-apple-system,'Segoe UI',Roboto,'PingFang SC','Microsoft YaHei',sans-serif; }
+  body { display: flex; flex-direction: column; }
+
+  /* —— 舞台（飞行结界）：牛在整个舞台范围内瞬移飞行 —— */
+  .stage {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    background:
+      radial-gradient(1200px 500px at 50% -10%, rgba(120,160,255,.10), transparent 60%),
+      linear-gradient(180deg, rgba(36,40,52,.97) 0%, rgba(28,32,42,.97) 100%);
+    border-radius: 10px 10px 0 0;
+    border: 1px solid rgba(255,255,255,.08);
+    border-bottom: 0;
+  }
+
+  /* —— 修仙特效层（残影/仙气，不挡鼠标）—— */
+  #fx {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 5;
+  }
+
+  /* 残影：瞬移轨迹上的牛影 */
+  .ghost {
+    position: absolute;
+    transform: translateX(-50%);
+    opacity: 0.55;
+    filter: blur(2px) saturate(0.5) brightness(1.25);
+    animation: ghostFade 0.55s ease-out forwards;
+    pointer-events: none;
+  }
+  .ghost img { height: 100%; width: auto; display: block; }
+  @keyframes ghostFade {
+    0% { opacity: 0.55; filter: blur(2px) saturate(0.5) brightness(1.25); }
+    70% { opacity: 0.22; filter: blur(5px) saturate(0.3); }
+    100% { opacity: 0; filter: blur(8px); }
+  }
+
+  /* 仙气粒子 */
+  .qi {
+    position: absolute;
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(195,242,255,.95) 0%, rgba(130,205,255,.5) 55%, transparent 72%);
+    filter: blur(.4px);
+    transform: translate(-50%, 50%) scale(1);
+    animation: qiFloat 1.05s ease-out forwards;
+    pointer-events: none;
+  }
+  /* 金光版（喊牛来时） */
+  .qi.gold {
+    width: 11px; height: 11px;
+    background: radial-gradient(circle, rgba(255,246,205,.98) 0%, rgba(255,203,96,.55) 55%, transparent 72%);
+  }
+  @keyframes qiFloat {
+    0% { opacity: 1; transform: translate(-50%, 50%) scale(1); }
+    100% { opacity: 0; transform: translate(calc(-50% + var(--dx)), calc(50% + var(--dy))) scale(.25); }
+  }
+
+  /* 落地气浪圈 */
+  .qi-ring {
+    position: absolute;
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    border: 2px solid rgba(160,225,255,.75);
+    transform: translate(-50%, 50%);
+    animation: ringExpand .65s ease-out forwards;
+    pointer-events: none;
+  }
+  .qi-ring.gold { border-color: rgba(255,208,110,.9); }
+  @keyframes ringExpand {
+    0% { opacity: .95; transform: translate(-50%, 50%) scale(.5); }
+    100% { opacity: 0; transform: translate(-50%, 50%) scale(3.4); }
+  }
+
+  /* —— 牛本体（整图，5 视角素材）—— */
+  .pet {
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 140px; height: 170px;
+    transform-origin: center bottom;
+    cursor: grab;
+    will-change: transform, left, bottom, opacity;
+    z-index: 10;
+  }
+  .pet:active { cursor: grabbing; }
+
+  /* 瞬移消失：化光而去 */
+  .pet.vanish { animation: petVanish .19s ease-in forwards; }
+  @keyframes petVanish {
+    0% { opacity: 1; filter: blur(0) brightness(1); transform: scale(1); }
+    100% { opacity: 0; filter: blur(6px) brightness(1.7); transform: scale(1.15) translateY(-8%); }
+  }
+
+  /* 瞬移出现：仙光凝形 */
+  .pet.appear { animation: petAppear .26s cubic-bezier(.2,1.5,.4,1) forwards; }
+  @keyframes petAppear {
+    0% { opacity: 0; filter: blur(7px) brightness(1.9); transform: scale(1.4) translateY(-12%); }
+    100% { opacity: 1; filter: blur(0) brightness(1); transform: scale(1); }
+  }
+
+  .cow {
+    position: absolute;
+    left: 50%; bottom: 0;
+    transform: translateX(-50%);
+    height: 100%; width: auto;
+    max-width: none;
+    pointer-events: none;
+    -webkit-user-drag: none;
+  }
+
+  /* 互动动画类 */
+  .jump { animation: jump .55s ease-out; }
+  @keyframes jump {
+    0% { transform: translateY(0) scale(1); }
+    40% { transform: translateY(-28%) scale(1.05,.95); }
+    100% { transform: translateY(0) scale(1); }
+  }
+  .squash { animation: squash .5s ease-in-out; }
+  @keyframes squash {
+    0% { transform: scale(1,1); }
+    35% { transform: scale(1.18,.72); }
+    60% { transform: scale(.92,1.12); }
+    100% { transform: scale(1,1); }
+  }
+  .shake { animation: shake .45s ease-in-out; }
+  @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    20% { transform: translateX(-8%) rotate(-5deg); }
+    40% { transform: translateX(8%) rotate(5deg); }
+    60% { transform: translateX(-6%) rotate(-3deg); }
+    80% { transform: translateX(6%) rotate(3deg); }
+  }
+
+  /* 大小档位 */
+  .size-small .pet { width: 110px; height: 134px; }
+  .size-medium .pet { width: 140px; height: 170px; }
+  .size-large .pet { width: 185px; height: 225px; }
+
+  /* —— 气泡：舞台内定位，JS 收敛在舞台边界内 —— */
+  .bubble {
+    position: absolute;
+    max-width: calc(100% - 12px);
+    padding: 12px 18px;
+    background: rgba(255,255,255,.98);
+    color: #5b3a05;
+    border: 1.5px solid #ffb84d;
+    border-radius: 14px;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.35;
+    white-space: normal;
+    word-break: break-all;
+    box-shadow: 0 4px 12px rgba(0,0,0,.2);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .18s ease, transform .18s ease;
+    z-index: 20;
+  }
+  .bubble.show { opacity: 1; transform: translateY(-4px); }
+  .bubble .b-main { font-size: 18px; letter-spacing: 1px; }
+  .bubble .sub { display: block; font-size: 12px; color: #888; font-weight: 500; margin-top: 3px; max-width: 420px; line-height: 1.35; }
+
+  /* —— 控制条 —— */
+  .bar {
+    height: 36px;
+    display: flex; align-items: center; gap: 8px;
+    padding: 0 10px;
+    background: rgba(20,22,30,.96);
+    border: 1px solid rgba(255,255,255,.08);
+    border-top: 0;
+    border-radius: 0 0 10px 10px;
+    color: #cdd3df;
+    font-size: 12px;
+  }
+  .bar button {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,.18);
+    color: #cdd3df;
+    border-radius: 6px;
+    padding: 3px 10px;
+    font-size: 12px;
+    cursor: pointer;
+  }
+  .bar button:hover { color: #fff; border-color: #ffb84d; }
+  .bar .spacer { flex: 1; }
+  .bar .tag {
+    font-weight: 700;
+    background: linear-gradient(135deg,#ffe8a3,#ffb84d);
+    color: #5b3a05;
+    border-radius: 999px;
+    padding: 2px 10px;
+  }
+  .bar .status { color: #8a93a3; font-size: 11px; }
+  .bar .status.up { color: #e5484d; }
+
+  /* —— 离线提示 —— */
+  .notice {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    color: #8a93a3;
+    font-size: 13px;
+    text-align: center;
+    padding: 16px;
+    background: rgba(20,22,30,.55);
+    backdrop-filter: blur(6px);
+    z-index: 30;
+  }
+  .notice b { color: #ffb84d; font-size: 15px; }
+</style>
+</head>
+<body>
+  <div class="stage size-medium" id="stage">
+    <div id="fx"></div>
+    <div id="pet" class="pet">
+      <img id="cow" class="cow" src="./assets/cow-view-3.png" alt="牛来" draggable="false">
+    </div>
+    <div id="bubble" class="bubble"></div>
+  </div>
+  <div class="bar">
+    <span class="tag">🐂 牛来</span>
+    <button id="btn-pause" title="暂停/继续">⏸ 暂停</button>
+    <button id="btn-reload" title="立即拉一次行情">↻ 刷新</button>
+    <button id="btn-size" title="切换牛的大小">📐 中</button>
+    <span class="spacer"></span>
+    <span class="status" id="status">正在连接 DSH 行情服务…</span>
+  </div>
+
+<script src="./standalone.js"></script>
+</body>
+</html>

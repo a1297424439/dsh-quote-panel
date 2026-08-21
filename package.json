@@ -1,7 +1,7 @@
 {
   "name": "dsh-quote-panel",
-  "version": "1.0.0",
-  "description": "Real-time stock watch panel for DeepSeek Harness. A-share indices & stocks with intraday / daily / 60-minute K-lines, US indices & stocks, self-managed watchlist, draggable always-on-top overlay. Free public data sources, no API key required.",
+  "version": "2.0.0",
+  "description": "Real-time stock watch panel for DeepSeek Harness — A-share indices & stocks with intraday / daily / 60-min K-lines, US indices & stocks, self-managed watchlist, draggable always-on-top overlay, plus a 🐂 牛来 desk pet that teleports and shouts on positive ticks. Web, browser-popup and Electron desktop-pet modes. Free public data sources, no API key required.",
   "license": "MIT",
   "keywords": [
     "deepseek-harness",
@@ -17,7 +17,10 @@
     "finance",
     "market",
     "watchlist",
-    "webui"
+    "webui",
+    "desk-pet",
+    "牛来",
+    "browser-pet"
   ],
   "repository": {
     "type": "git",
@@ -32,6 +35,8 @@
   "exports": {
     ".": "./lib/index.js",
     "./client": "./lib/client.js",
+    "./desk-pet": "./lib/desk-pet/standalone.html",
+    "./cow-sheet": "./lib/cow-sheet.png",
     "./cordis.patch.yml": "./cordis.patch.yml",
     "./package.json": "./package.json"
   },
@@ -44,7 +49,7 @@
     "LICENSE"
   ],
   "scripts": {
-    "check": "node --check lib/index.js && node --check lib/client.js"
+    "check": "node --check lib/index.js && node --check lib/client.js && node --check lib/desk-pet/standalone.js"
   },
   "dsh": {
     "bundle": {
