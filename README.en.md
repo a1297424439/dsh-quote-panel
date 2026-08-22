@@ -69,6 +69,8 @@ The GitHub release page also bundles `dsh-quote-panel-install.tar.gz` (plugin + 
 
 ## 🐂 Cow Pet / 牛来
 
+![Pet demo](docs/pet-screenshot.png)
+
 Click **🐂 牛来** in the panel header to summon a small cow that roams the bottom of your session page. Whenever **any symbol in your watchlist is currently up (changePct > 0)**, the cow will:
 
 1. Run two quick steps (≈1.6 s, ~78 px horizontal hop, two jumps)

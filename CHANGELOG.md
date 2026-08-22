@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.2 (2026-08-22)
+
+- 🖼 **README 新增桌宠演示截图**：牛来桌宠章节加入真实运行截图（`docs/pet-screenshot.png`，压缩至 398KB），中英文 README 同步。
+
 ## 2.2.1 (2026-08-22)
 
 - 🧰 **新增一键安装脚本**：仓库根目录提供 `install.sh`（Linux/macOS）与 `install.ps1`（Windows，纯 ASCII 兼容 PowerShell 5.1），幂等安装——复制源码 → 写 profile 依赖/bundle（先备份）→ pnpm install → 提示重启；README 安装章节同步改写为「一键脚本优先」。

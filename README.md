@@ -69,6 +69,8 @@ GitHub Releases 页面会附带 `dsh-quote-panel-install.tar.gz` 安装包（含
 
 ## 🐂 牛来桌宠（🐮 Desk Pet）
 
+![桌宠演示](docs/pet-screenshot.png)
+
 看板头部点击 **🐂 牛来**，打开后一头牛会浮在页面底部左右徘徊。每当自选列表里**任一标的实时上涨（`changePct > 0`）**，牛立刻：
 
 1. 跑两步（在 1.6 秒里走完横向 78px + 两跳）

@@ -1,6 +1,6 @@
 {
   "name": "dsh-quote-panel",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "description": "Real-time stock watch panel for DeepSeek Harness — A-share indices & stocks with intraday / daily / 60-min K-lines, US indices & stocks, self-managed watchlist, draggable always-on-top overlay, plus a 🐂 牛来 desk pet with switchable skins that roams the session page and shouts on positive ticks. Free public data sources, no API key required.",
   "license": "MIT",
   "keywords": [
