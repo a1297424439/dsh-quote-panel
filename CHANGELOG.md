@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.2.1 (2026-08-22)
+
+- 🧰 **新增一键安装脚本**：仓库根目录提供 `install.sh`（Linux/macOS）与 `install.ps1`（Windows，纯 ASCII 兼容 PowerShell 5.1），幂等安装——复制源码 → 写 profile 依赖/bundle（先备份）→ pnpm install → 提示重启；README 安装章节同步改写为「一键脚本优先」。
+- 📦 **npm 包内容修正**：`files` 白名单补上 `docs`（修复 npm 包页 README 截图 404）与两个 install 脚本；`exports` 补 `./install.sh` / `./install.ps1`。
+- 🖼 **README 截图压缩**：`docs/screenshot.png` 2.1MB → 406KB（256 色 PNG，1400px 宽），符合 GitHub <1MB 建议。
+
 ## 2.2.0 (2026-08-22)
 
 - 🐂 **牛来桌宠支持多皮肤轮换**：新增「毛绒牛」形象（3D 毛绒质感，正面 + 侧面两视角），与原有「经典牛」组成皮肤库；每次**打开**牛来自动切到下一套（关→开循环切换），当前皮肤持久化到 `localStorage`（`dshq.petSkin`），刷新不丢。

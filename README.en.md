@@ -26,6 +26,20 @@ A real-time stock watch panel for [DeepSeek Harness](https://github.com/deepseek
 
 > A bundle plugin: no approval prompts, survives restarts.
 
+### One-click install scripts (recommended)
+
+The repo root ships two idempotent install scripts:
+
+```bash
+# Linux / macOS
+bash install.sh
+
+# Windows (PowerShell 5.1+)
+powershell -NoProfile -ExecutionPolicy Bypass -File install.ps1
+```
+
+Each script automatically: copies the plugin source → writes `dependencies["dsh-quote-panel"]="link:<absolute-path>"` and the `dsh.profile.bundles` entry into the web profile `package.json` (with a backup first; idempotent) → runs `pnpm install` → prompts you to restart. Override defaults with the `DSH_PROFILE_DIR` / `DSH_PLUGIN_DIR` env vars.
+
 ### From a local checkout (any OS)
 
 1. Clone / copy this repo into your `dsh-plugin-download` folder (or anywhere).
@@ -35,15 +49,15 @@ A real-time stock watch panel for [DeepSeek Harness](https://github.com/deepseek
 3. Run `pnpm install` inside the profile directory.
 4. Restart `dsh web`, then click the **📈 行情** button in the session header.
 
-On Windows, the same steps apply via PowerShell; on a fresh install you can also copy the package into the profile's `node_modules` directly (see the bundled `install.sh` in release assets).
-
-### From npm / GitHub releases (once published)
+### From npm / GitHub releases (v2.0+ published)
 
 ```bash
 # npm
 npm i -g dsh-quote-panel
 # or add to your profile dependencies like any other dsh bundle plugin
 ```
+
+The GitHub release page also bundles `dsh-quote-panel-install.tar.gz` (plugin + `install.sh`) for fresh environments.
 
 ## 🛠 Usage
 

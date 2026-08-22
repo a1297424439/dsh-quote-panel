@@ -26,7 +26,21 @@
 
 > bundle 插件：无需审批弹窗，重启不丢失。
 
-### 本地源码安装（各平台通用）
+### 一键安装脚本（推荐）
+
+仓库根目录自带两个一键安装脚本（幂等，可重复执行）：
+
+```bash
+# Linux / macOS
+bash install.sh
+
+# Windows（PowerShell 5.1+）
+powershell -NoProfile -ExecutionPolicy Bypass -File install.ps1
+```
+
+脚本会自动：复制插件源码 → 在 web profile 的 `package.json` 写入 `dependencies["dsh-quote-panel"]="link:<绝对路径>"` 与 `dsh.profile.bundles` 条目（先备份，幂等）→ 执行 `pnpm install` → 提示重启。可用环境变量 `DSH_PROFILE_DIR` / `DSH_PLUGIN_DIR` 覆盖默认路径。
+
+### 手动安装（各平台通用）
 
 1. 克隆/复制本仓库到你的 `dsh-plugin-download` 目录（或任意位置）。
 2. 编辑 web profile 的 `package.json`（默认 `~/.dsh/profiles/web/package.json`）：
@@ -34,8 +48,6 @@
    - `dsh.profile.bundles` 增加：`"dsh-quote-panel"`
 3. 在 profile 目录执行 `pnpm install`。
 4. 重启 `dsh web`，在会话页顶栏点击 **📈 行情** 按钮。
-
-Windows 下同样用 PowerShell 操作；全新环境也可直接把包复制进 profile 的 `node_modules`（见发布包中的 `install.sh`）。
 
 ### 从 npm / GitHub Releases 安装（v2.0 已发布）
 

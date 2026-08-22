@@ -1,6 +1,6 @@
 {
   "name": "dsh-quote-panel",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "Real-time stock watch panel for DeepSeek Harness — A-share indices & stocks with intraday / daily / 60-min K-lines, US indices & stocks, self-managed watchlist, draggable always-on-top overlay, plus a 🐂 牛来 desk pet with switchable skins that roams the session page and shouts on positive ticks. Free public data sources, no API key required.",
   "license": "MIT",
   "keywords": [
@@ -35,11 +35,16 @@
   "exports": {
     ".": "./lib/index.js",
     "./client": "./lib/client.js",
+    "./install.sh": "./install.sh",
+    "./install.ps1": "./install.ps1",
     "./cordis.patch.yml": "./cordis.patch.yml",
     "./package.json": "./package.json"
   },
   "files": [
     "lib",
+    "docs",
+    "install.sh",
+    "install.ps1",
     "cordis.patch.yml",
     "README.md",
     "README.en.md",
