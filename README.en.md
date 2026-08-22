@@ -19,7 +19,7 @@ A real-time stock watch panel for [DeepSeek Harness](https://github.com/deepseek
 - **Watchlist**: add / remove symbols per market, persisted in `localStorage`
 - **Auto refresh**: quotes refresh every 5 s (CN) / 10 s (US), server-side
 - **Always-on-top & draggable**: z-index pinned above any skin/theme overlay; drag the title bar anywhere; position is remembered
-- **🐂 Cow Pet / 牛来 (added in v1.1)**: click the **🐂 牛来** button in the panel header to summon a cow that roams your DSH session page. Whenever **any symbol in your watchlist has `changePct > 0`**, the cow immediately does a two-step run + shouts `\牛来/` in a yellow speech bubble (twice, 320 ms apart). It floats inside the session page, scrolls with it, and auto-syncs your watchlist.
+- **🐂 Cow Pet / 牛来 (added in v1.1, multi-skin in v2.2)**: click the **🐂 牛来** button in the panel header to summon a cow that roams your DSH session page. Whenever **any symbol in your watchlist has `changePct > 0`**, the cow immediately does a two-step run + shouts `\牛来/` in a yellow speech bubble (twice, 320 ms apart). It floats inside the session page, scrolls with it, and auto-syncs your watchlist. **Each time you open the pet it cycles to the next skin** (Classic Cow / Plush Cow; the selection persists across refreshes).
 - **Zero config**: all data comes from free public endpoints (Tencent Finance, no key)
 
 ## 🚀 Installation
